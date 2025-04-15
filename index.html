@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden; /* Prevent buttons from going outside the screen */
+            background-image: url('./Images/sample.jpg'); /* Set the background image */
+            background-size: cover; /* Ensure the image covers the entire screen */
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Prevent the image from repeating */
+        }
+        form {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8); /* Add a semi-transparent background for better readability */
+            padding: 2rem;
+            border-radius: 10px;
+        }
+        label {
+            font-size: 3rem; /* Larger font size for the label */
+            display: block;
+            margin-bottom: 1.5rem;
+        }
+        button {
+            font-size: 2rem; /* Larger font size for the buttons */
+            padding: 1rem 2rem; /* Larger padding for the buttons */
+            margin: 1rem;
+            position: relative;
+        }
+        #congrats {
+            margin-top: 2rem;
+            font-size: 2rem;
+            color: green;
+            display: none; /* Initially hidden */
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <label for="feelings">Do you have feelings for Louis Oborza?</label>
+        <div>
+            <button type="button" id="yesButton">Yes</button>
+            <button type="button" id="noButton">No</button>
+        </div>
+        <div id="congrats">
+            <p id="message"></p>
+            <p id="date"></p>
+        </div>
+    </form>
+    <script>
+        const yesButton = document.getElementById('yesButton');
+        const noButton = document.getElementById('noButton');
+        const congratsDiv = document.getElementById('congrats');
+        const messageParagraph = document.getElementById('message');
+        const dateParagraph = document.getElementById('date');
+
+        yesButton.addEventListener('click', () => {
+            // Show the congrats message
+            congratsDiv.style.display = 'block';
+
+            // Set the congratulatory message
+            messageParagraph.textContent = "Congrats! You are now a couple!";
+
+            // Get today's date
+            const today = new Date();
+            const formattedDate = today.toDateString(); // Format the date as a readable string
+
+            // Display the date below the congrats message
+            dateParagraph.textContent = `Today's date is: ${formattedDate}`;
+        });
+
+        noButton.addEventListener('click', () => {
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+
+            // Generate random positions within the screen boundaries
+            const randomX = Math.random() * (screenWidth - noButton.offsetWidth);
+            const randomY = Math.random() * (screenHeight - noButton.offsetHeight);
+
+            // Move the "No" button to the new random position
+            noButton.style.position = 'absolute';
+            noButton.style.left = `${randomX}px`;
+            noButton.style.top = `${randomY}px`;
+        });
+    </script>
+</body>
+</html>
