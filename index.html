@@ -55,40 +55,52 @@
         </div>
     </form>
     <script>
-        const yesButton = document.getElementById('yesButton');
-        const noButton = document.getElementById('noButton');
-        const congratsDiv = document.getElementById('congrats');
-        const messageParagraph = document.getElementById('message');
-        const dateParagraph = document.getElementById('date');
+    const yesButton = document.getElementById('yesButton');
+    const noButton = document.getElementById('noButton');
+    const congratsDiv = document.getElementById('congrats');
+    const messageParagraph = document.getElementById('message');
+    const dateParagraph = document.getElementById('date');
 
-        yesButton.addEventListener('click', () => {
-            // Show the congrats message
-            congratsDiv.style.display = 'block';
+    let isGameActive = true; // Control flag to stop further actions
 
-            // Set the congratulatory message
-            messageParagraph.textContent = "Congrats! You are now a couple!";
+    yesButton.addEventListener('click', () => {
+        if (!isGameActive) return; // Prevent multiple clicks
+        isGameActive = false;
 
-            // Get today's date
-            const today = new Date();
-            const formattedDate = today.toDateString(); // Format the date as a readable string
+        // Show the congrats message
+        congratsDiv.style.display = 'block';
 
-            // Display the date below the congrats message
-            dateParagraph.textContent = `Today's date is: ${formattedDate}`;
-        });
+        // Set the congratulatory message
+        messageParagraph.textContent = "Congrats! You are now a couple!";
 
-        noButton.addEventListener('click', () => {
-            const screenWidth = window.innerWidth;
-            const screenHeight = window.innerHeight;
+        // Get today's date
+        const today = new Date();
+        const formattedDate = today.toDateString();
 
-            // Generate random positions within the screen boundaries
-            const randomX = Math.random() * (screenWidth - noButton.offsetWidth);
-            const randomY = Math.random() * (screenHeight - noButton.offsetHeight);
+        // Display the date below the congrats message
+        dateParagraph.textContent = `Today's date is: ${formattedDate}`;
 
-            // Move the "No" button to the new random position
-            noButton.style.position = 'absolute';
-            noButton.style.left = `${randomX}px`;
-            noButton.style.top = `${randomY}px`;
-        });
-    </script>
+        // Hide both buttons
+        yesButton.style.display = 'none';
+        noButton.style.display = 'none';
+    });
+
+    noButton.addEventListener('click', () => {
+        if (!isGameActive) return; // Stop moving when yes is clicked
+
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+
+        // Generate random positions within the screen boundaries
+        const randomX = Math.random() * (screenWidth - noButton.offsetWidth);
+        const randomY = Math.random() * (screenHeight - noButton.offsetHeight);
+
+        // Move the "No" button to the new random position
+        noButton.style.position = 'absolute';
+        noButton.style.left = `${randomX}px`;
+        noButton.style.top = `${randomY}px`;
+    });
+</script>
 </body>
+
 </html>
