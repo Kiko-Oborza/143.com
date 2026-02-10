@@ -1,23 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden; /* Prevent buttons from going outside the screen */
-            background-image: url('./Images/sample.jpg'); /* Set the background image */
-            background-size: cover; /* Ensure the image covers the entire screen */
-            background-position: center; /* Center the image */
-            background-repeat: no-repeat; /* Prevent the image from repeating */
-        }
-        form {
+<meta charset="UTF-8">
+<title>Perfect Solid Heart Glow</title>
+<style>
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden; /* Prevent buttons from going outside the screen */
+    background-image: url('./Images/sample.jpg'); /* Set the background image */
+    background-size: cover; /* Ensure the image covers the entire screen */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+}
+
+/* PERFECT HEART USING CLIP-PATH */
+.heart {
+  width: 200px;
+  height: 180px;
+  background: #ff2d55; /* solid fill */
+  clip-path: polygon(
+    50% 100%, 
+    0% 50%, 
+    0% 25%, 
+    25% 0%, 
+    50% 20%, 
+    75% 0%, 
+    100% 25%, 
+    100% 50%
+  );
+  position: relative;
+  animation: heartbeat 1s infinite ease-in-out;
+  filter: drop-shadow(0 0 15px #ff2d55);
+}
+ form {
             text-align: center;
             background: rgba(255, 255, 255, 0.8); /* Add a semi-transparent background for better readability */
             padding: 2rem;
@@ -37,14 +56,41 @@
         #congrats {
             margin-top: 2rem;
             font-size: 2rem;
-            color: green;
+            color: rgb(218, 31, 31);
             display: none; /* Initially hidden */
         }
-    </style>
+
+/* OUTLINE GLOW ANIMATION */
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.heart::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  box-shadow: 0 0 15px #ff2d55, 0 0 25px rgba(255, 120, 180, 0.7);
+  border-radius: 50%;
+  animation: glow 1s infinite alternate;
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 15px #ff2d55, 0 0 30px rgba(255, 45, 85, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 35px #ff78b4, 0 0 60px rgba(255, 120, 180, 0.7);
+  }
+}
+</style>
 </head>
 <body>
-    <form>
-        <label for="feelings">Do you have feelings for Louis Oborza?</label>
+  <div class="heart"></div>
+
+  <form>
+        <label for="feelings">Can I be your Valentinces?</label>
         <div>
             <button type="button" id="yesButton">Yes</button>
             <button type="button" id="noButton">No</button>
@@ -54,6 +100,7 @@
             <p id="date"></p>
         </div>
     </form>
+
     <script>
     const yesButton = document.getElementById('yesButton');
     const noButton = document.getElementById('noButton');
@@ -71,7 +118,7 @@
         congratsDiv.style.display = 'block';
 
         // Set the congratulatory message
-        messageParagraph.textContent = "Congrats! You are now a couple!";
+        messageParagraph.textContent = "Saakin Ka din pala eh! Happy Valentine's Day!";
 
         // Get today's date
         const today = new Date();
@@ -102,5 +149,4 @@
     });
 </script>
 </body>
-
 </html>
