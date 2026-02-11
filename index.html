@@ -116,7 +116,7 @@ button {
 
 <form>
     <!-- IMAGE WITH ID -->
-    <img src="Images/happy_heart.png" alt="Heart" class="form-heart" id="heartImage">
+    <img src="url('./Images/happy_heart.png')" alt="Heart" class="form-heart" id="heartImage">
 
     <label>Can I be your Valentinces?</label>
 
@@ -155,14 +155,14 @@ yesButton.addEventListener('click', () => {
     noButton.style.display = 'none';
 
     // Change back to happy heart just in case
-    heartImage.src = "Images/happy_heart.png";
+    heartImage.src = "url('./Images/happy_heart.png')";
 });
 
 noButton.addEventListener('click', () => {
     if (!isGameActive) return;
 
     // CHANGE IMAGE TO SAD HEART
-    heartImage.src = "Images/sad_heart.png";
+    heartImage.src = "url('./Images/sad_heart.png')";
 
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
