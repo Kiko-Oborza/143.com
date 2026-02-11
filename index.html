@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Perfect Solid Heart Glow</title>
+
 <style>
 body {
     display: flex;
@@ -10,18 +11,18 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    overflow: hidden; /* Prevent buttons from going outside the screen */
-    background-image: url('./Images/sample.jpg'); /* Set the background image */
-    background-size: cover; /* Ensure the image covers the entire screen */
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Prevent the image from repeating */
+    overflow: hidden;
+    background-image: url('./Images/sample.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-/* PERFECT HEART USING CLIP-PATH */
+/* PERFECT HEART */
 .heart {
   width: 200px;
   height: 180px;
-  background: #ff2d55; /* solid fill */
+  background: #ff2d55;
   clip-path: polygon(
     50% 100%, 
     0% 50%, 
@@ -36,36 +37,14 @@ body {
   animation: heartbeat 1s infinite ease-in-out;
   filter: drop-shadow(0 0 15px #ff2d55);
 }
- form {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.8); /* Add a semi-transparent background for better readability */
-            padding: 2rem;
-            border-radius: 10px;
-        }
-        label {
-            font-size: 3rem; /* Larger font size for the label */
-            display: block;
-            margin-bottom: 1.5rem;
-        }
-        button {
-            font-size: 2rem; /* Larger font size for the buttons */
-            padding: 1rem 2rem; /* Larger padding for the buttons */
-            margin: 1rem;
-            position: relative;
-        }
-        #congrats {
-            margin-top: 2rem;
-            font-size: 2rem;
-            color: rgb(218, 31, 31);
-            display: none; /* Initially hidden */
-        }
 
-/* OUTLINE GLOW ANIMATION */
+/* HEART BEAT */
 @keyframes heartbeat {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.1); }
 }
 
+/* HEART GLOW */
 .heart::after {
   content: '';
   position: absolute;
@@ -84,69 +63,118 @@ body {
     box-shadow: 0 0 35px #ff78b4, 0 0 60px rgba(255, 120, 180, 0.7);
   }
 }
+
+/* FORM */
+form {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 2rem;
+    border-radius: 15px;
+    margin-left: 2rem;
+}
+
+/* IMAGE ABOVE TEXT */
+.form-heart {
+    width: 120px;
+    margin-bottom: 1rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    animation: float 2.5s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+label {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 1.5rem;
+}
+
+button {
+    font-size: 2rem;
+    padding: 1rem 2rem;
+    margin: 1rem;
+    cursor: pointer;
+}
+
+#congrats {
+    margin-top: 2rem;
+    font-size: 2rem;
+    color: rgb(218, 31, 31);
+    display: none;
+}
 </style>
 </head>
+
 <body>
-  <div class="heart"></div>
 
-  <form>
-        <label for="feelings">Can I be your Valentinces?</label>
-        <div>
-            <button type="button" id="yesButton">Yes</button>
-            <button type="button" id="noButton">No</button>
-        </div>
-        <div id="congrats">
-            <p id="message"></p>
-            <p id="date"></p>
-        </div>
-    </form>
+<div class="heart"></div>
 
-    <script>
-    const yesButton = document.getElementById('yesButton');
-    const noButton = document.getElementById('noButton');
-    const congratsDiv = document.getElementById('congrats');
-    const messageParagraph = document.getElementById('message');
-    const dateParagraph = document.getElementById('date');
+<form>
+    <!-- IMAGE WITH ID -->
+    <img src="Images/happy_heart.png" alt="Heart" class="form-heart" id="heartImage">
 
-    let isGameActive = true; // Control flag to stop further actions
+    <label>Can I be your Valentinces?</label>
 
-    yesButton.addEventListener('click', () => {
-        if (!isGameActive) return; // Prevent multiple clicks
-        isGameActive = false;
+    <div>
+        <button type="button" id="yesButton">Yes</button>
+        <button type="button" id="noButton">No</button>
+    </div>
 
-        // Show the congrats message
-        congratsDiv.style.display = 'block';
+    <div id="congrats">
+        <p id="message"></p>
+        <p id="date"></p>
+    </div>
+</form>
 
-        // Set the congratulatory message
-        messageParagraph.textContent = "Saakin Ka din pala eh! Happy Valentine's Day!";
+<script>
+const yesButton = document.getElementById('yesButton');
+const noButton = document.getElementById('noButton');
+const heartImage = document.getElementById('heartImage');
+const congratsDiv = document.getElementById('congrats');
+const messageParagraph = document.getElementById('message');
+const dateParagraph = document.getElementById('date');
 
-        // Get today's date
-        const today = new Date();
-        const formattedDate = today.toDateString();
+let isGameActive = true;
 
-        // Display the date below the congrats message
-        dateParagraph.textContent = `Today's date is: ${formattedDate}`;
+yesButton.addEventListener('click', () => {
+    if (!isGameActive) return;
+    isGameActive = false;
 
-        // Hide both buttons
-        yesButton.style.display = 'none';
-        noButton.style.display = 'none';
-    });
+    congratsDiv.style.display = 'block';
+    messageParagraph.textContent = "Saakin Ka din pala eh! Happy Valentine's Day!";
 
-    noButton.addEventListener('click', () => {
-        if (!isGameActive) return; // Stop moving when yes is clicked
+    const today = new Date();
+    dateParagraph.textContent = `Today's date is: ${today.toDateString()}`;
 
-        const screenWidth = window.innerWidth;
-        const screenHeight = window.innerHeight;
+    yesButton.style.display = 'none';
+    noButton.style.display = 'none';
 
-        // Generate random positions within the screen boundaries
-        const randomX = Math.random() * (screenWidth - noButton.offsetWidth);
-        const randomY = Math.random() * (screenHeight - noButton.offsetHeight);
+    // Change back to happy heart just in case
+    heartImage.src = "Images/happy_heart.png";
+});
 
-        // Move the "No" button to the new random position
-        noButton.style.position = 'absolute';
-        noButton.style.left = `${randomX}px`;
-        noButton.style.top = `${randomY}px`;
-    });
+noButton.addEventListener('click', () => {
+    if (!isGameActive) return;
+
+    // CHANGE IMAGE TO SAD HEART
+    heartImage.src = "Images/sad_heart.png";
+
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+
+    const randomX = Math.random() * (screenWidth - noButton.offsetWidth);
+    const randomY = Math.random() * (screenHeight - noButton.offsetHeight);
+
+    noButton.style.position = 'absolute';
+    noButton.style.left = `${randomX}px`;
+    noButton.style.top = `${randomY}px`;
+});
 </script>
+
 </body>
 </html>
