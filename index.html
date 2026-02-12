@@ -19,6 +19,27 @@ body {
     font-family: 'Segoe UI', sans-serif;
 }
 
+    form {
+    position: relative;
+    background: linear-gradient(#ffffff, #fff1f4);
+    width: 360px;
+    padding: 2.5rem 2.2rem 3rem;
+    margin-left: 2.5rem;
+    border-radius: 18px;
+    box-shadow:
+        0 20px 40px rgba(0,0,0,0.25),
+        inset 0 0 0 1px rgba(255, 182, 193, 0.7);
+    }
+
+    form::before {
+    content: "";
+    position: absolute;
+    inset: 14px;
+    border: 2px dashed rgba(255, 105, 135, 0.45);
+    border-radius: 14px;
+    pointer-events: none;
+}
+
 /* HEART SHAPE */
 .heart {
     width: 200px;
@@ -182,3 +203,4 @@ noButton.addEventListener('click', () => {
 
 </body>
 </html>
+
