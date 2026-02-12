@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Perfect Solid Heart Glow</title>
+<title>Valentine Surprise 💖</title>
 
 <style>
+/* BODY */
 body {
     display: flex;
     justify-content: center;
@@ -15,71 +16,48 @@ body {
     background-image: url('./Images/sample.jpg');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    font-family: 'Segoe UI', sans-serif;
 }
 
-/* PERFECT HEART */
+/* HEART SHAPE */
 .heart {
-  width: 200px;
-  height: 180px;
-  background: #ff2d55;
-  clip-path: polygon(
-    50% 100%, 
-    0% 50%, 
-    0% 25%, 
-    25% 0%, 
-    50% 20%, 
-    75% 0%, 
-    100% 25%, 
-    100% 50%
-  );
-  position: relative;
-  animation: heartbeat 1s infinite ease-in-out;
-  filter: drop-shadow(0 0 15px #ff2d55);
+    width: 200px;
+    height: 180px;
+    background: #ff2d55;
+    clip-path: polygon(
+        50% 100%,
+        0% 50%,
+        0% 25%,
+        25% 0%,
+        50% 20%,
+        75% 0%,
+        100% 25%,
+        100% 50%
+    );
+    animation: heartbeat 1s infinite ease-in-out;
+    filter: drop-shadow(0 0 20px #ff2d55);
 }
 
-/* HEART BEAT */
+/* HEART ANIMATION */
 @keyframes heartbeat {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.12); }
 }
 
-/* HEART GLOW */
-.heart::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: transparent;
-  box-shadow: 0 0 15px #ff2d55, 0 0 25px rgba(255, 120, 180, 0.7);
-  border-radius: 50%;
-  animation: glow 1s infinite alternate;
-}
-
-@keyframes glow {
-  0% {
-    box-shadow: 0 0 15px #ff2d55, 0 0 30px rgba(255, 45, 85, 0.5);
-  }
-  100% {
-    box-shadow: 0 0 35px #ff78b4, 0 0 60px rgba(255, 120, 180, 0.7);
-  }
-}
-
-/* FORM */
+/* FORM CARD */
 form {
     text-align: center;
-    background: rgba(255, 255, 255, 0.85);
-    padding: 2rem;
-    border-radius: 15px;
-    margin-left: 2rem;
+    background: rgba(255, 255, 255, 0.88);
+    padding: 2rem 2.5rem;
+    border-radius: 20px;
+    margin-left: 2.5rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
-/* IMAGE ABOVE TEXT */
+/* IMAGE ABOVE QUESTION */
 .form-heart {
     width: 120px;
     margin-bottom: 1rem;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
     animation: float 2.5s ease-in-out infinite;
 }
 
@@ -88,23 +66,53 @@ form {
     50% { transform: translateY(-10px); }
 }
 
+/* QUESTION */
 label {
     font-size: 2rem;
-    display: block;
+    color: #c2185b;
     margin-bottom: 1.5rem;
+    display: block;
 }
 
+/* BUTTON BASE */
 button {
     font-size: 1.5rem;
-    padding: 0.8rem 1.5rem;
+    padding: 0.9rem 2.2rem;
     margin: 1rem;
+    border: none;
+    border-radius: 50px;
     cursor: pointer;
+    font-weight: bold;
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 18px rgba(255, 45, 85, 0.4);
 }
 
+/* YES BUTTON */
+#yesButton {
+    background: linear-gradient(45deg, #ff2d55, #ff78b4);
+}
+
+#yesButton:hover {
+    transform: scale(1.15);
+    box-shadow: 0 10px 25px rgba(255, 45, 85, 0.7);
+}
+
+/* NO BUTTON */
+#noButton {
+    background: linear-gradient(45deg, #ff78b4, #ff2d55);
+    position: relative;
+}
+
+#noButton:hover {
+    transform: translateY(-5px) scale(1.05);
+}
+
+/* RESULT */
 #congrats {
     margin-top: 2rem;
-    font-size: 1.8rem;
-    color: rgb(218, 31, 31);
+    font-size: 1.6rem;
+    color: #d81b60;
     display: none;
 }
 </style>
@@ -115,14 +123,13 @@ button {
 <div class="heart"></div>
 
 <form>
-    <!-- IMAGE WITH ID -->
     <img src="./Images/happy_heart.png" alt="Heart" class="form-heart" id="heartImage">
 
-    <label>Can I be your Valentine?</label>
+    <label>Can I be your Valentine? 💘</label>
 
     <div>
-        <button type="button" id="yesButton">Yes</button>
-        <button type="button" id="noButton">No</button>
+        <button type="button" id="yesButton">💖 Yes</button>
+        <button type="button" id="noButton">💔 No</button>
     </div>
 
     <div id="congrats">
@@ -141,40 +148,35 @@ const dateParagraph = document.getElementById('date');
 
 let isGameActive = true;
 
+/* YES CLICK */
 yesButton.addEventListener('click', () => {
     if (!isGameActive) return;
     isGameActive = false;
 
+    heartImage.src = "./Images/happy_heart.png";
     congratsDiv.style.display = 'block';
-    messageParagraph.textContent = "Saakin Ka din pala eh! Happy Valentine's Day!";
-
-    const today = new Date();
-    dateParagraph.textContent = `Today's date is: ${today.toDateString()}`;
+    messageParagraph.textContent = "Sa’kin ka rin pala 💕 Happy Valentine’s Day!";
+    dateParagraph.textContent = new Date().toDateString();
 
     yesButton.style.display = 'none';
     noButton.style.display = 'none';
-
-    // Show happy heart
-    heartImage.src = "./Images/happy_heart.png";
 });
 
+/* NO CLICK – RUN AWAY */
 noButton.addEventListener('click', () => {
     if (!isGameActive) return;
 
-    // Show sad heart
     heartImage.src = "./Images/sad_heart.png";
 
-    // Get viewport dimensions
-    const screenWidth = window.innerWidth - noButton.offsetWidth;
-    const screenHeight = window.innerHeight - noButton.offsetHeight;
+    const maxX = window.innerWidth - noButton.offsetWidth - 20;
+    const maxY = window.innerHeight - noButton.offsetHeight - 20;
 
-    // Random position inside viewport
-    const randomX = Math.random() * screenWidth;
-    const randomY = Math.random() * screenHeight;
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
 
     noButton.style.position = 'absolute';
-    noButton.style.left = `${randomX}px`;
-    noButton.style.top = `${randomY}px`;
+    noButton.style.left = randomX + 'px';
+    noButton.style.top = randomY + 'px';
 });
 </script>
 
