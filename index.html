@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Valentine's Day 💖</title>
+<title>Love Letter Valentine 💌</title>
 
 <style>
-/* BODY */
+/* BODY — BACKGROUND UNCHANGED */
 body {
     display: flex;
     justify-content: center;
@@ -13,7 +13,10 @@ body {
     height: 100vh;
     margin: 0;
     overflow: hidden;
-    background: radial-gradient(circle at top, #ffb6c1, #ff2d55);
+    background-image: url('./Images/sample.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     font-family: 'Segoe UI', sans-serif;
 }
 
@@ -45,41 +48,40 @@ body {
 /* LOVE LETTER FORM */
 form {
     position: relative;
-    background: linear-gradient(#fffdf8, #fff1f4);
+    background: linear-gradient(#ffffff, #fff1f4);
     width: 360px;
-    padding: 2.5rem 2rem 3rem;
+    padding: 2.5rem 2.2rem 3rem;
     margin-left: 2.5rem;
     border-radius: 18px;
     box-shadow:
         0 20px 40px rgba(0,0,0,0.25),
-        inset 0 0 0 1px rgba(255, 182, 193, 0.6);
+        inset 0 0 0 1px rgba(255, 182, 193, 0.7);
 }
 
-/* LETTER EDGE EFFECT */
+/* LETTER BORDER */
 form::before {
     content: "";
     position: absolute;
-    inset: 12px;
-    border: 2px dashed rgba(255, 105, 135, 0.4);
+    inset: 14px;
+    border: 2px dashed rgba(255, 105, 135, 0.45);
     border-radius: 14px;
     pointer-events: none;
 }
 
-/* HEART SEAL IMAGE */
+/* HEART SEAL */
 .form-heart {
     width: 110px;
     display: block;
-    margin: 0 auto 1rem;
+    margin: 0 auto 1.2rem;
     animation: float 2.5s ease-in-out infinite;
 }
 
-/* FLOAT */
 @keyframes float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
 }
 
-/* LOVE LETTER TEXT */
+/* LETTER TEXT */
 label {
     font-family: 'Georgia', serif;
     font-size: 1.9rem;
@@ -92,7 +94,7 @@ label {
 /* BUTTON BASE */
 button {
     font-size: 1.4rem;
-    padding: 0.8rem 2.2rem;
+    padding: 0.85rem 2.2rem;
     margin: 1rem 0.6rem;
     border: none;
     border-radius: 50px;
@@ -168,34 +170,16 @@ const dateParagraph = document.getElementById('date');
 
 let isGameActive = true;
 
-/* YES */
+/* YES CLICK */
 yesButton.addEventListener('click', () => {
     if (!isGameActive) return;
     isGameActive = false;
 
     heartImage.src = "./Images/happy_heart.png";
     congratsDiv.style.display = 'block';
-    messageParagraph.textContent = "You’ve made my heart the happiest 💕";
+    messageParagraph.textContent = "You’ve made my heart so happy 💕";
     dateParagraph.textContent = new Date().toDateString();
 
     yesButton.style.display = 'none';
     noButton.style.display = 'none';
 });
-
-/* NO RUN AWAY */
-noButton.addEventListener('click', () => {
-    if (!isGameActive) return;
-
-    heartImage.src = "./Images/sad_heart.png";
-
-    const maxX = window.innerWidth - noButton.offsetWidth - 20;
-    const maxY = window.innerHeight - noButton.offsetHeight - 20;
-
-    noButton.style.position = 'absolute';
-    noButton.style.left = Math.random() * maxX + 'px';
-    noButton.style.top = Math.random() * maxY + 'px';
-});
-</script>
-
-</body>
-</html>
