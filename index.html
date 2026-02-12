@@ -183,3 +183,21 @@ yesButton.addEventListener('click', () => {
     yesButton.style.display = 'none';
     noButton.style.display = 'none';
 });
+
+/* NO RUN AWAY */
+noButton.addEventListener('click', () => {
+    if (!isGameActive) return;
+
+    heartImage.src = "./Images/sad_heart.png";
+
+    const maxX = window.innerWidth - noButton.offsetWidth - 20;
+    const maxY = window.innerHeight - noButton.offsetHeight - 20;
+
+    noButton.style.position = 'absolute';
+    noButton.style.left = Math.random() * maxX + 'px';
+    noButton.style.top = Math.random() * maxY + 'px';
+});
+</script>
+
+</body>
+</html>
