@@ -89,21 +89,21 @@ form {
 }
 
 label {
-    font-size: 3rem;
+    font-size: 2rem;
     display: block;
     margin-bottom: 1.5rem;
 }
 
 button {
-    font-size: 2rem;
-    padding: 1rem 2rem;
+    font-size: 1.5rem;
+    padding: 0.8rem 1.5rem;
     margin: 1rem;
     cursor: pointer;
 }
 
 #congrats {
     margin-top: 2rem;
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: rgb(218, 31, 31);
     display: none;
 }
@@ -116,9 +116,9 @@ button {
 
 <form>
     <!-- IMAGE WITH ID -->
-    <img src="url('./Images/happy_heart.png')" alt="Heart" class="form-heart" id="heartImage">
+    <img src="./Images/happy_heart.png" alt="Heart" class="form-heart" id="heartImage">
 
-    <label>Can I be your Valentinces?</label>
+    <label>Can I be your Valentine?</label>
 
     <div>
         <button type="button" id="yesButton">Yes</button>
@@ -154,21 +154,23 @@ yesButton.addEventListener('click', () => {
     yesButton.style.display = 'none';
     noButton.style.display = 'none';
 
-    // Change back to happy heart just in case
-    heartImage.src = "url('./Images/happy_heart.png')";
+    // Show happy heart
+    heartImage.src = "./Images/happy_heart.png";
 });
 
 noButton.addEventListener('click', () => {
     if (!isGameActive) return;
 
-    // CHANGE IMAGE TO SAD HEART
-    heartImage.src = "url('./Images/sad_heart.png')";
+    // Show sad heart
+    heartImage.src = "./Images/sad_heart.png";
 
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight;
+    // Get viewport dimensions
+    const screenWidth = window.innerWidth - noButton.offsetWidth;
+    const screenHeight = window.innerHeight - noButton.offsetHeight;
 
-    const randomX = Math.random() * (screenWidth - noButton.offsetWidth);
-    const randomY = Math.random() * (screenHeight - noButton.offsetHeight);
+    // Random position inside viewport
+    const randomX = Math.random() * screenWidth;
+    const randomY = Math.random() * screenHeight;
 
     noButton.style.position = 'absolute';
     noButton.style.left = `${randomX}px`;
