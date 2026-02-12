@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Valentine Surprise 💖</title>
+<title>Valentine's Day 💖</title>
 
 <style>
 /* BODY */
@@ -13,16 +13,14 @@ body {
     height: 100vh;
     margin: 0;
     overflow: hidden;
-    background-image: url('./Images/sample.jpg');
-    background-size: cover;
-    background-position: center;
+    background: radial-gradient(circle at top, #ffb6c1, #ff2d55);
     font-family: 'Segoe UI', sans-serif;
 }
 
-/* HEART SHAPE */
+/* HEART DECOR */
 .heart {
-    width: 200px;
-    height: 180px;
+    width: 180px;
+    height: 160px;
     background: #ff2d55;
     clip-path: polygon(
         50% 100%,
@@ -35,85 +33,104 @@ body {
         100% 50%
     );
     animation: heartbeat 1s infinite ease-in-out;
-    filter: drop-shadow(0 0 20px #ff2d55);
+    filter: drop-shadow(0 0 25px #ff2d55);
 }
 
 /* HEART ANIMATION */
 @keyframes heartbeat {
     0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.12); }
+    50% { transform: scale(1.15); }
 }
 
-/* FORM CARD */
+/* LOVE LETTER FORM */
 form {
-    text-align: center;
-    background: rgba(255, 255, 255, 0.88);
-    padding: 2rem 2.5rem;
-    border-radius: 20px;
+    position: relative;
+    background: linear-gradient(#fffdf8, #fff1f4);
+    width: 360px;
+    padding: 2.5rem 2rem 3rem;
     margin-left: 2.5rem;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    border-radius: 18px;
+    box-shadow:
+        0 20px 40px rgba(0,0,0,0.25),
+        inset 0 0 0 1px rgba(255, 182, 193, 0.6);
 }
 
-/* IMAGE ABOVE QUESTION */
+/* LETTER EDGE EFFECT */
+form::before {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border: 2px dashed rgba(255, 105, 135, 0.4);
+    border-radius: 14px;
+    pointer-events: none;
+}
+
+/* HEART SEAL IMAGE */
 .form-heart {
-    width: 120px;
-    margin-bottom: 1rem;
+    width: 110px;
+    display: block;
+    margin: 0 auto 1rem;
     animation: float 2.5s ease-in-out infinite;
 }
 
+/* FLOAT */
 @keyframes float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
 }
 
-/* QUESTION */
+/* LOVE LETTER TEXT */
 label {
-    font-size: 2rem;
-    color: #c2185b;
-    margin-bottom: 1.5rem;
+    font-family: 'Georgia', serif;
+    font-size: 1.9rem;
+    color: #b71c46;
+    margin-bottom: 1.6rem;
     display: block;
+    line-height: 1.3;
 }
 
 /* BUTTON BASE */
 button {
-    font-size: 1.5rem;
-    padding: 0.9rem 2.2rem;
-    margin: 1rem;
+    font-size: 1.4rem;
+    padding: 0.8rem 2.2rem;
+    margin: 1rem 0.6rem;
     border: none;
     border-radius: 50px;
     cursor: pointer;
     font-weight: bold;
     color: white;
     transition: all 0.3s ease;
-    box-shadow: 0 6px 18px rgba(255, 45, 85, 0.4);
+    box-shadow: 0 6px 18px rgba(255, 45, 85, 0.45);
 }
 
 /* YES BUTTON */
 #yesButton {
-    background: linear-gradient(45deg, #ff2d55, #ff78b4);
+    background: linear-gradient(45deg, #ff2d55, #ff8fb1);
 }
 
 #yesButton:hover {
     transform: scale(1.15);
-    box-shadow: 0 10px 25px rgba(255, 45, 85, 0.7);
+    box-shadow: 0 10px 28px rgba(255, 45, 85, 0.8);
 }
 
 /* NO BUTTON */
 #noButton {
-    background: linear-gradient(45deg, #ff78b4, #ff2d55);
+    background: linear-gradient(45deg, #ff8fb1, #ff2d55);
     position: relative;
 }
 
 #noButton:hover {
-    transform: translateY(-5px) scale(1.05);
+    transform: translateY(-6px) scale(1.05);
 }
 
-/* RESULT */
+/* MESSAGE */
 #congrats {
     margin-top: 2rem;
-    font-size: 1.6rem;
-    color: #d81b60;
+    font-family: 'Georgia', serif;
+    font-size: 1.5rem;
+    color: #c2185b;
     display: none;
+    line-height: 1.4;
 }
 </style>
 </head>
@@ -123,9 +140,12 @@ button {
 <div class="heart"></div>
 
 <form>
-    <img src="./Images/happy_heart.png" alt="Heart" class="form-heart" id="heartImage">
+    <img src="./Images/happy_heart.png" alt="Heart Seal" class="form-heart" id="heartImage">
 
-    <label>Can I be your Valentine? 💘</label>
+    <label>
+        My Dearest 💌<br>
+        Will you be my Valentine?
+    </label>
 
     <div>
         <button type="button" id="yesButton">💖 Yes</button>
@@ -148,21 +168,21 @@ const dateParagraph = document.getElementById('date');
 
 let isGameActive = true;
 
-/* YES CLICK */
+/* YES */
 yesButton.addEventListener('click', () => {
     if (!isGameActive) return;
     isGameActive = false;
 
     heartImage.src = "./Images/happy_heart.png";
     congratsDiv.style.display = 'block';
-    messageParagraph.textContent = "Sa’kin ka rin pala 💕 Happy Valentine’s Day!";
+    messageParagraph.textContent = "You’ve made my heart the happiest 💕";
     dateParagraph.textContent = new Date().toDateString();
 
     yesButton.style.display = 'none';
     noButton.style.display = 'none';
 });
 
-/* NO CLICK – RUN AWAY */
+/* NO RUN AWAY */
 noButton.addEventListener('click', () => {
     if (!isGameActive) return;
 
@@ -171,12 +191,9 @@ noButton.addEventListener('click', () => {
     const maxX = window.innerWidth - noButton.offsetWidth - 20;
     const maxY = window.innerHeight - noButton.offsetHeight - 20;
 
-    const randomX = Math.random() * maxX;
-    const randomY = Math.random() * maxY;
-
     noButton.style.position = 'absolute';
-    noButton.style.left = randomX + 'px';
-    noButton.style.top = randomY + 'px';
+    noButton.style.left = Math.random() * maxX + 'px';
+    noButton.style.top = Math.random() * maxY + 'px';
 });
 </script>
 
