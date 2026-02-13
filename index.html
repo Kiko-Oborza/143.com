@@ -2,11 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Valentine Surprise 💖</title>
 
 <style>
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 /* BODY */
@@ -15,9 +18,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
     overflow: hidden;
-    background-image: url('./Images/sample.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -171,7 +172,7 @@ button {
 
 <div class="heart"></div>
 
-<form>
+<form id="valentineForm">
     <img src="./Images/happy_heart.png" class="form-heart" id="heartImage">
 
     <label id="questionText">Can I be your Valentine? 💘</label>
@@ -198,11 +199,12 @@ const messageParagraph = document.getElementById('message');
 const dateParagraph = document.getElementById('date');
 const labelText = document.getElementById('questionText');
 const personImage = document.getElementById('personImage');
+const valentineForm = document.getElementById('valentineForm');
 
 let isGameActive = true;
 let noCount = 0;
 
-/* MOVE NO BUTTON */
+/* MOVE NO BUTTON WITHOUT OVERLAPPING FORM OR HEART */
 function moveNoButton() {
     if (!isGameActive) return;
 
@@ -220,11 +222,36 @@ function moveNoButton() {
     }
 
     const padding = 20;
+
+    // Get form and heart boundaries
+    const formRect = valentineForm.getBoundingClientRect();
+    const heartRect = document.querySelector('.heart').getBoundingClientRect();
+
     const maxX = window.innerWidth - noButton.offsetWidth - padding;
     const maxY = window.innerHeight - noButton.offsetHeight - padding;
 
-    const randomX = Math.random() * (maxX - padding) + padding;
-    const randomY = Math.random() * (maxY - padding) + padding;
+    let randomX, randomY;
+    let safe = false;
+    let attempts = 0;
+
+    while (!safe && attempts < 100) {
+        randomX = Math.random() * (maxX - padding) + padding;
+        randomY = Math.random() * (maxY - padding) + padding;
+
+        const noRect = {
+            left: randomX,
+            top: randomY,
+            right: randomX + noButton.offsetWidth,
+            bottom: randomY + noButton.offsetHeight
+        };
+
+        // Check overlap with form or heart
+        const overlapsForm = !(noRect.right < formRect.left || noRect.left > formRect.right || noRect.bottom < formRect.top || noRect.top > formRect.bottom);
+        const overlapsHeart = !(noRect.right < heartRect.left || noRect.left > heartRect.right || noRect.bottom < heartRect.top || noRect.top > heartRect.bottom);
+
+        safe = !overlapsForm && !overlapsHeart;
+        attempts++;
+    }
 
     noButton.style.position = 'fixed';
     noButton.style.left = randomX + 'px';
@@ -263,12 +290,12 @@ noButton.addEventListener('click', (e) => {
     moveNoButton();
 });
 
-/* RESPONSIVE BACKGROUND FOR MOBILE */
+/* RESPONSIVE BACKGROUND */
 function updateBackground() {
     if (window.innerWidth <= 768) {
-        document.body.style.backgroundImage = "./Images/sample2.jpg";
+        document.body.style.backgroundImage = "url('./Images/sample2.jpg')";
     } else {
-        document.body.style.backgroundImage = "./Images/sample.jpg";
+        document.body.style.backgroundImage = "url('./Images/sample.jpg')";
     }
 }
 
