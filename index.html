@@ -10,7 +10,290 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine Surprise 💖</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+/* BODY */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    background-image: url('./Images/sample.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: 'Segoe UI', sans-serif;
+    transition: background-image 0.5s ease-in-out;
+}
+
+/* DISABLE IMAGE INTERACTION */
+img {
+    pointer-events: none;
+    user-select: none;
+}
+
+/* HEART SHAPE */
+.heart {
+    width: 200px;
+    height: 180px;
+    background: #ff2d55;
+    clip-path: polygon(
+        50% 100%,
+        0% 50%,
+        0% 25%,
+        25% 0%,
+        50% 20%,
+        75% 0%,
+        100% 25%,
+        100% 50%
+    );
+    animation: heartbeat 1s infinite ease-in-out;
+    filter: drop-shadow(0 0 20px #ff2d55);
+    z-index: 1;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+}
+
+/* FORM */
+form {
+    text-align: center;
+    background: rgba(255,255,255,0.92);
+    padding: 2rem 2.5rem;
+    border-radius: 20px;
+    margin-left: 2.5rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 5;
+}
+
+/* FLOATING HEART IMAGE */
+.form-heart {
+    width: 120px;
+    margin-bottom: 1rem;
+    animation: float 2.5s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* TEXT */
+label {
+    font-size: 2rem;
+    color: #c2185b;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+/* SHAKE */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    15% { transform: translateX(-6px); }
+    30% { transform: translateX(6px); }
+    45% { transform: translateX(-6px); }
+    60% { transform: translateX(6px); }
+    75% { transform: translateX(-4px); }
+    100% { transform: translateX(0); }
+}
+
+.shake {
+    animation: shake 0.4s ease-in-out infinite;
+}
+
+/* BUTTONS */
+button {
+    font-size: 1.5rem;
+    padding: 0.9rem 2.2rem;
+    margin: 1rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+    transition: all 0.25s ease;
+    box-shadow: 0 6px 18px rgba(255,45,85,0.4);
+    position: relative;
+    z-index: 10;
+    touch-action: manipulation;
+}
+
+#yesButton {
+    background: linear-gradient(45deg, #ff2d55, #ff78b4);
+}
+
+#yesButton:hover {
+    transform: scale(1.15);
+}
+
+#noButton {
+    background: linear-gradient(45deg, #ff78b4, #ff2d55);
+}
+
+/* RESULT */
+#congrats {
+    margin-top: 2rem;
+    font-size: 1.6rem;
+    color: #d81b60;
+    display: none;
+}
+
+/* PERSON IMAGE */
+.person-image {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 25vw;
+    z-index: 0;
+}
+
+/* MOBILE STYLING ONLY */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+
+    form {
+        margin-left: 0;
+        margin-top: 1rem;
+    }
+
+    .person-image {
+        width: 40vw;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="heart"></div>
+
+<form>
+    <img src="./Images/happy_heart.png" class="form-heart" id="heartImage">
+
+    <label id="questionText">Can I be your Valentine? 💘</label>
+
+    <div>
+        <button type="button" id="yesButton">💖 Yes</button>
+        <button type="button" id="noButton">💔 No</button>
+    </div>
+
+    <div id="congrats">
+        <p id="message"></p>
+        <p id="date"></p>
+    </div>
+</form>
+
+<img src="./Images/person.png" class="person-image" id="personImage">
+
+<script>
+const noButton = document.getElementById('noButton');
+const yesButton = document.getElementById('yesButton');
+const heartImage = document.getElementById('heartImage');
+const congratsDiv = document.getElementById('congrats');
+const messageParagraph = document.getElementById('message');
+const dateParagraph = document.getElementById('date');
+const labelText = document.getElementById('questionText');
+const personImage = document.getElementById('personImage');
+
+let isGameActive = true;
+let noCount = 0;
+
+/* MOVE NO BUTTON */
+function moveNoButton() {
+    if (!isGameActive) return;
+
+    noCount++;
+    heartImage.src = "./Images/sad_heart.png";
+
+    if (noCount === 3) {
+        labelText.textContent = "Ako na to ohh! 🥺";
+    }
+
+    if (noCount === 4) {
+        labelText.textContent = "PLSSS! 😭";
+        labelText.classList.add('shake');
+        personImage.src = "./Images/person_cry.png";
+    }
+
+    const padding = 20;
+    const maxX = window.innerWidth - noButton.offsetWidth - padding;
+    const maxY = window.innerHeight - noButton.offsetHeight - padding;
+
+    const randomX = Math.random() * (maxX - padding) + padding;
+    const randomY = Math.random() * (maxY - padding) + padding;
+
+    noButton.style.position = 'fixed';
+    noButton.style.left = randomX + 'px';
+    noButton.style.top = randomY + 'px';
+}
+
+/* YES CLICK */
+yesButton.addEventListener('click', () => {
+    if (!isGameActive) return;
+    isGameActive = false;
+
+    heartImage.src = "./Images/happy_heart.png";
+    personImage.src = "./Images/person_love.png";
+    labelText.classList.remove('shake');
+
+    congratsDiv.style.display = 'block';
+    messageParagraph.textContent = "Sa’kin ka rin pala 💕 Happy Valentine’s Day!";
+    dateParagraph.textContent = new Date().toDateString();
+
+    yesButton.style.display = 'none';
+    noButton.style.display = 'none';
+});
+
+/* DESKTOP */
+noButton.addEventListener('mouseenter', moveNoButton);
+
+/* MOBILE */
+noButton.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    moveNoButton();
+});
+
+/* FALLBACK */
+noButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    moveNoButton();
+});
+
+/* RESPONSIVE BACKGROUND FOR MOBILE */
+function updateBackground() {
+    if (window.innerWidth <= 768) {
+        document.body.style.backgroundImage = "url('./Images/sample2.jpg')";
+    } else {
+        document.body.style.backgroundImage = "url('./Images/sample.jpg')";
+    }
+}
+
+// Run on load
+updateBackground();
+
+// Run on window resize
+window.addEventListener('resize', updateBackground);
+</script>
+
+</body>
+</html>
+
     margin: 0;
     overflow: hidden;
     background-image: url('./Images/sample.jpg');
@@ -182,3 +465,4 @@ noButton.addEventListener('click', () => {
 
 </body>
 </html>
+
